@@ -50,16 +50,22 @@ Rules:
 3. Only use tables and columns that exist in the schema above
 4. Do not include any text before or after the query
 5. Do not use markdown code blocks or backticks
+6. For any string comparison in WHERE clauses, use COLLATE NOCASE to make it case-insensitive
 
 Example of correct response:
-SELECT name FROM customers WHERE id = 1;
+SELECT * FROM load_balancer WHERE location COLLATE NOCASE = 'us-east';
 
 Example of incorrect responses:
-❌ Here's the query: SELECT name FROM customers WHERE id = 1;
+❌ SELECT * FROM load_balancer WHERE location = 'us-east';
+❌ Here's the query: SELECT * FROM load_balancer WHERE location COLLATE NOCASE = 'us-east';
 ❌ ```sql
-SELECT name FROM customers WHERE id = 1;
+SELECT * FROM load_balancer WHERE location COLLATE NOCASE = 'us-east';
 ```
-❌ The query to get the customer name is: SELECT name FROM customers WHERE id = 1;"""
+
+Note: Always use COLLATE NOCASE in WHERE clauses when comparing strings to make the comparison case-insensitive. For example:
+- Correct: WHERE location COLLATE NOCASE = 'us-east'
+- Correct: WHERE device_name COLLATE NOCASE LIKE 'lb%'
+- Correct: WHERE vip_address COLLATE NOCASE IN ('10.0.0.1', '10.0.0.2')"""
     
     def generate_prompt(self, query):
         """Generate a prompt with relevant schema information"""

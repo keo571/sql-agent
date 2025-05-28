@@ -32,6 +32,9 @@ class SchemaAwareAgent:
         """Clean and validate the SQL query"""
         if not sql_query:
             raise ValueError("Empty response received")
+        
+        # Debug: Log the raw response
+        logger.info(f"Raw LLM response: {repr(sql_query)}")
             
         # Remove any markdown code blocks
         sql_query = re.sub(r'```sql\s*|\s*```', '', sql_query)
@@ -49,6 +52,8 @@ class SchemaAwareAgent:
             if select_match:
                 sql_query = select_match.group(0) + ';'
             else:
+                # Debug: Log when no SELECT found
+                logger.error(f"No SELECT statement found in response: {repr(sql_query)}")
                 raise ValueError("No valid SELECT statement found in response")
         
         # Ensure the query starts with SELECT and ends with a semicolon
