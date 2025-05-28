@@ -84,6 +84,13 @@ pip install -r requirements.txt
 export OPENAI_API_KEY='your-api-key'  # On Windows: set OPENAI_API_KEY=your-api-key
 ```
 
+5. Create sample database tables for testing:
+```bash
+python scripts/create_test_tables.py
+```
+
+This will create sample load balancer and VIP tables with test data so you can try out the agent immediately.
+
 ## Usage
 
 1. Start the server:
