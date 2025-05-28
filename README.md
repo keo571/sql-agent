@@ -5,17 +5,36 @@ A natural language to SQL query agent that helps users interact with databases u
 ## Features
 
 - Natural language to SQL query conversion
-- Dynamic prompt generation based on query context and schema relevance
-- Schema-aware query generation
+- Intelligent schema analysis and table selection
+- Case-insensitive querying
 - Interactive web interface
-- Support for complex SQL queries with JOINs
-- Schema information retrieval
+- Complex SQL queries with JOINs
 - Error handling and validation
+
+## Recent Improvements
+
+### Case-Insensitive Query Enhancement
+The agent now provides robust case-insensitive querying capabilities:
+- **Flexible input handling**: Users can enter queries with any case variation (e.g., "us-east", "US-EAST", "Us-East")
+- **Smart value matching**: The system automatically handles case variations in database lookups
+- **Improved user experience**: No need to worry about exact case matching when querying data
+
+### Advanced Relevancy Analyzer
+Enhanced the query analysis system to make the agent more intelligent:
+- **Context-aware table selection**: Automatically identifies which database tables are most relevant to each query
+- **Optimized prompt generation**: Includes only necessary schema information, improving response accuracy
+- **Better performance**: Reduced token usage while maintaining query accuracy
+- **Smarter JOIN detection**: Improved ability to determine when table relationships are needed
+
+These improvements make the agent significantly more robust and user-friendly, allowing for more natural interactions with your database.
 
 ## Project Structure
 
 ```
 sql-agent/
+├── README.md           # Project documentation and setup guide
+├── CHANGELOG.md        # Detailed change history and version tracking
+├── requirements.txt    # Python dependencies
 ├── backend/
 │   ├── api/            # Flask API endpoints
 │   ├── core/           # Core agent logic
@@ -30,6 +49,8 @@ sql-agent/
 │   └── templates/      # HTML templates
 ├── data/               # Sample data and database files
 ├── scripts/            # Utility scripts
+├── tests/              # Test files and test questions
+│   └── test_questions.md  # Example queries for testing
 └── notebooks/          # Jupyter notebooks for development
 ```
 
@@ -76,13 +97,26 @@ http://localhost:5001
 ```
 
 3. Start asking questions! For example:
+
+### Basic Queries
+- "Show me all load balancers in us-east"
+- "List all VIP members with port 8080"
+- "What are all the VIP addresses in the system?"
 - "What tables do you have?"
-- "What items did Alice buy?"
-- "What is the total amount spent by each customer?"
-- "Which customers spent more than $30 and left a tip greater than $10?"
-- "What are the top 3 most expensive items purchased?"
-- "Show me all purchases with customer names and item details"
-- "Which customers have made more than 2 purchases?"
+
+### JOIN Operations
+- "Show me all load balancers and their VIP addresses"
+- "Display load balancer names along with their VIP member addresses"
+
+### Case-Insensitive Filtering
+- "Find load balancers in US-EAST" (works with any case)
+- "Show me devices with names like lb-prod%" 
+
+### Complex Queries
+- "Show me load balancers in us-east that have VIPs on port 80"
+- "List all VIP members that are associated with load balancers in us-west"
+
+For more test questions, see [tests/test_questions.md](tests/test_questions.md).
 
 ## How It Works
 
